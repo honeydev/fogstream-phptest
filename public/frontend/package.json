@@ -1,0 +1,19 @@
+{
+  "name": "news-frontend",
+  "version": "0.0.1",
+  "description": "frontend for news service",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lebedev Alexey",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bootstrap": "^4.1.3",
+    "css-loader": "^1.0.1",
+    "vue": "^2.5.17",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2"
+  }
+}
