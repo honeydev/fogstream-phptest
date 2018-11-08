@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Axios from 'axios';
 
 
-Vue.component('container', {
+Vue.component('news', {
 
     template: `
         <div class="container">
@@ -39,7 +39,7 @@ Vue.component('row', {
     `
 });
 
-Vue.component('news', {
+Vue.component('newsArticle', {
     template: `
         <div class="col-3 offset-1">
             <div class="card" style="width: 18rem;">
