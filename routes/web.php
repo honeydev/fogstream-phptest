@@ -11,9 +11,11 @@
 |
 */
 
-
 Auth::routes();
 
 Route::get('/', 'NewsController@index');
 
-Route::get('profile', 'HomeController@index')->name('profile');
+Route::get('profile', 'ProfileController@index')->name('profile');
+Route::get('profile/update', 'ProfileController@updatePage')->name('profile.update');
+
+Route::get('/logout', 'Auth\LoginController@logout')->name('logout');

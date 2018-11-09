@@ -1,6 +1,6 @@
 @extends('news.layouts.news')
 @section('content')
-    {{  var_dump($errors) }}
+{!! NoCaptcha::renderJs() !!}
 <div class="container">
     <div class="row">
         <form class="mx-auto loginForm" method="POST" action="{{ route('login') }}">
@@ -13,6 +13,11 @@
             @if ($errors->has('password'))
                 <div class="alert alert-danger" role="alert">
                     {{ $errors->first('password') }}
+                </div>
+            @endif
+            @if ($errors->has('g-recaptcha-response'))
+                <div class="alert alert-danger" role="alert">
+                    {{ $errors->first('g-recaptcha-response') }}
                 </div>
             @endif
             <div class="form-group">
@@ -28,6 +33,7 @@
                 <input type="checkbox" class="form-check-input" id="rememberCheckbox">
                 <label class="form-check-label" for="rememberCheckbox">Check me out</label>
             </div>
+            {!! NoCaptcha::display() !!}
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
 

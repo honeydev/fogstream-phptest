@@ -4,7 +4,7 @@ namespace News\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class ProfileController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -23,6 +23,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('news.profile', ['page' => 'home']);
+        return view('news.profile', ['page' => 'Profile']);
+    }
+
+    /**
+     * Show the update profile page
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function updatePage()
+    {
+        return view('news.update', ['page' => 'Update profile']);
     }
 }

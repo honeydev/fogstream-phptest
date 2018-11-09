@@ -1,24 +1,35 @@
 @extends('news.layouts.news')
 @section('content')
+{{ var_dump($errors) }}
     <div class="container">
-        <div class="row h-50">
-            <form class="mx-auto registerForm" method="POST" action="{{ route('login') }}">
+        <div class="row">
+            <form class="mx-auto registerForm" method="POST" action="{{ route('register') }}">
                 @csrf
+
+                @if ($errors->has('email'))
+                    <div class="alert alert-danger" role="alert">
+                        {{ $errors->first('email') }}
+                    </div>
+                @endif
+                @if ($errors->has('password'))
+                    <div class="alert alert-danger" role="alert">
+                        {{ $errors->first('password') }}
+                    </div>
+                @endif
                 <div class="form-group">
                     <label for="email">Email address</label>
-                    <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+                    <input name="email" type="email" class="{{ $errors->has('email') ? 'is-invalid' : '' }} form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+                    <input type="password" name="password" class="{{ $errors->has('password') ? 'is-invalid' : '' }} form-control" id="password" placeholder="Password" required>
                 </div>
                 <div class="form-group">
                     <label for="passwordConfirm">Password repeat</label>
-                    <input type="password" name="password-confirmation" class="form-control" id="passwordConfirm" placeholder="Password repeat">
+                    <input type="password" name="password-confirmation" class="{{ $errors->has('password') ? 'is-invalid' : '' }} form-control" id="password_confirm" placeholder="Password repeat" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
-
         </div>
     </div>
 @endsection

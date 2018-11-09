@@ -37,6 +37,13 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'g-recaptcha-response' => 'required|captcha'
+        ]);
+    }
+
     public function showLoginForm()
     {
         return view('news.auth.login', ['page' => 'Login']);
