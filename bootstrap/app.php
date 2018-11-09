@@ -41,6 +41,10 @@ $app->singleton(
     News\Exceptions\Handler::class
 );
 
+$app->bind('News\Savers\AvatarSaver', function ($app) {
+    return new News\Savers\AvatarSaver();
+});
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application

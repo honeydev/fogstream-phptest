@@ -1,24 +1,17 @@
 @extends('news.layouts.news')
 
 @section('content')
-<style>
-    .profile {
-        margin-top: 40px;
-        margin-bottom: 40px;
-    }
 
-    .
-</style>
 <div class="container">
     <div class="row profile">
         <div class="col-2 offset-3">
-            <img src="images/user.png" class="rounded float-left" alt="Avatar">
+            <img src="{{ $avatar }}" class="rounded float-left" alt="Avatar">
         </div>
         <div class="col-4">
             <ul>
-                <li>Email: devspades@gmail.com</li>
-                <li>Name: </li>
-                <li>Birthday: 09.09.1991</li>
+                <li>Email: {{ $user->email }}</li>
+                <li>Name: {{ $user->name }} </li>
+                <li>Birthday: {{ $user->getBirthday()->day }}.{{ $user->getBirthday()->month }}.{{ $user->getBirthday()->year }}</li>
             </ul>
         </div>
     </div>

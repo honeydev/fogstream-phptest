@@ -65,5 +65,11 @@ return [
         ],
 
     ],
+    /*
+     * user folders map
+     */
+    'folders' => [
+        'avatars' => 'avatars'
+    ]
 
 ];

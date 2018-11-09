@@ -15,8 +15,8 @@ class Avatars extends Migration
     {
         Schema::create('avatars', function (Blueprint $table) {
             $table->increments('id');
-            $table->increments('user_id');
-            $table->string('file_name');
+            $table->integer('user_id')->unsigned();
+            $table->string('name');
             $table->timestamps();
         });
 

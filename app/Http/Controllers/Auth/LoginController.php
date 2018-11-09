@@ -4,6 +4,7 @@ namespace News\Http\Controllers\Auth;
 
 use News\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -37,10 +38,12 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    protected function validator(array $data)
+    protected function validateLogin(Request $request)
     {
-        return Validator::make($data, [
-            'g-recaptcha-response' => 'required|captcha'
+        $this->validate($request, [
+            $this->username() => 'required',
+            'password' => 'required',
+//            'g-recaptcha-response' => 'required|captcha'
         ]);
     }
 

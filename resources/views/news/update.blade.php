@@ -1,31 +1,28 @@
 @extends('news.layouts.news')
 @section('content')
-<style>
-    .profileForm {
-        margin-top: 40px;
-    }
-</style>
+    {{var_dump($errors) }}
 <div class="container">
     <div class="row">
-        <form class="mx-auto profileForm" method="POST" action="{{ url('profile/update/new') }}">
+        <form class="mx-auto profileForm" method="post" action="{{ route('profile.store') }}" enctype='multipart/form-data'>
+            @csrf
              <div class="form-group">
                 <label for="nameInput">Name</label>
-                <input type="text" class="form-control" id="nameInput" placeholder="Name">
+                <input name="name" type="text" class="form-control" id="nameInput" value="{{ $user->name }}">
             </div>
             <div class="form-group">
                 <label for="nameInput">Birthday date</label>
-                <input class="form-control" type="date" value="2011-08-19" id="example-date-input">
+                <input name="birthday" class="form-control" type="date" value="{{ $user->birthday_date }}" id="example-date-input">
             </div>
             <div class="form-group">
                 <label for="nameInput">Avatar</label>
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="inputGroupFile01">
-                    <label class="custom-file-label" for="inputGroupFile01">Select avatar</label>
+                    <input name="avatar" type="file" class="custom-file-input" id="inputGroupFile01">
+                    <label  class="custom-file-label" for="inputGroupFile01">Select avatar</label>
                 </div>
             </div>
             <div class="row">
                 <div class="col-10 text-center">
-                    <a href="{{ url('/profile') }}/update" class="btn btn-primary">Update</a>
+                    <button type="submit" class="btn btn-primary">Update</button>
                 </div>
             </div>
         </form>
