@@ -6,7 +6,10 @@ namespace News\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use \News\Savers\PreviewSaver;
+use \News\Transformers\NewsTransformer;
 use \News\{News, Preview};
+use League\Fractal\Manager;
 
 class NewsController extends Controller
 {
@@ -15,9 +18,22 @@ class NewsController extends Controller
      */
     private $previewSaver;
 
-    public function __construct(\News\Savers\PreviewSaver $previewSaver)
+    /**
+     * @var \News\Transformers\NewsTransformer
+     */
+    private $newsTransformer;
+
+    private $fractalManager;
+
+    public function __construct(
+        PreviewSaver $previewSaver, 
+        NewsTransformer $newsTransformer,
+        Manager $fractalManager
+    )
     {
         $this->previewSaver = $previewSaver;
+        $this->newsTransformer = $newsTransformer;
+        $this->fractalManager = $fractalManager;
     }
 
     public function index()
@@ -66,8 +82,12 @@ class NewsController extends Controller
         ]);
     }
 
-    public function getAllNews()
+    public function getAll()
     {
-        
+        $allNewsResource = $this->newsTransformer->transform(News::all());
+        $allNews = $this->fractalManager->createData($allNewsResource);
+        dd($allNews->toArray());
+        $allNewsCollection = $allNewsResource->getData();
+        return response()->json($allNewsCollection);
     }
 }

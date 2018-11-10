@@ -17,4 +17,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/api/news/get/all', );
+Route::get('/news/get/all', 'NewsController@getAll');

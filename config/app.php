@@ -159,7 +159,8 @@ return [
         // News\Providers\BroadcastServiceProvider::class,
         News\Providers\EventServiceProvider::class,
         News\Providers\RouteServiceProvider::class,
-
+        News\Providers\NewsTransformerProvider::class,
+        News\Providers\FractalManagerProvider::class
     ],
 
     /*

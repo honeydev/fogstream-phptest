@@ -49,7 +49,6 @@ $app->bind('News\Savers\PreviewSaver', function ($app) {
     return new News\Savers\PreviewSaver();
 });
 
-
 /*
 |--------------------------------------------------------------------------
 | Return The Application

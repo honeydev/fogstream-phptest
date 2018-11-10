@@ -9,3 +9,7 @@ $factory->define(\News\News::class, function (Faker $faker) {
         'user_id' => factory(News\User::class)->create()->id
     ];
 });
+
+$factory->afterCreating(\News\News::class, function ($news, Faker $faker) {
+    factory(\News\Preview::class)->create(["news_id" => $news->id]);
+});
