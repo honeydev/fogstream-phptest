@@ -12,3 +12,20 @@
     margin-top: 40px;
     margin-bottom: 40px;
 }
+
+.profileAvatar {
+    max-height: 200px;
+    max-width: 200px;
+}
+
+.news {
+    margin-top: 40px;
+}
+
+.addNewsForm {
+    margin-top: 40px;
+}
+
+.preview {
+    max-height: 400px;
+}

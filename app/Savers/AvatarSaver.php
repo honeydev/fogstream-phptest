@@ -4,21 +4,29 @@ declare(strict_types=1);
 
 namespace News\Savers;
 
-use GuzzleHttp\Psr7\UploadedFile;
-use News\User;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Model;
+use News\{User, Avatar};
 
 class AvatarSaver 
 {
-    public function save(UploadedFile $avatar)
+    public function save(UploadedFile $avatar, Model $owner): Model
     {
-        $owner = Auth::user();
         $currentAvatar = $owner->avatar();
-        $avatarsFolder = config('filesystem.folders.avatars');
+        $avatarsFolder = config('filesystems.folders.public_storage') . config('filesystems.folders.avatars');
         $targetDir = "{$avatarsFolder}/{$owner->email}";
-        dd($targetDir);
-
-        if ($currentAvatar->isDefault()) {
-
+        $file = Storage::putFile($targetDir, $avatar);
+        $newAvatar = Avatar::create([
+            'name' => pathinfo($file, PATHINFO_BASENAME),
+            'user_id' => $owner->id
+        ]);
+        if (!$currentAvatar->isDefault()) {
+            $oldAvatarName = $currentAvatar->name;
+            $currentAvatar->delete();
+            Storage::delete("{$targetDir}/{$oldAvatarName}");
         }
+        return $newAvatar;
     }
 }

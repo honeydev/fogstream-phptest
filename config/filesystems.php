@@ -69,7 +69,9 @@ return [
      * user folders map
      */
     'folders' => [
-        'avatars' => 'avatars'
+        'public_storage' => 'public/',
+        'avatars' => 'avatars',
+        'previews' => 'previews'
     ]
 
 ];

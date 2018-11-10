@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace News\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -35,7 +37,7 @@ class ProfileController extends Controller
         return view('news.profile', [
             'page' => 'Profile',
             'user' => Auth::user(),
-            'avatar' => Storage::url($avatar->getUri())
+            'avatar' => $avatar
         ]);
     }
 
@@ -48,7 +50,7 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-        return view('news.update', [
+        return view('news.updateprofile', [
             'page' => 'Update profile',
             'user' => $user
         ]);
@@ -56,28 +58,18 @@ class ProfileController extends Controller
 
     public function storeProfile(Request $request)
     {
-        $request->validate([
+        $validatedRequestBody = $request->validate([
             'name' => 'between:1,255',
             'birthday' => 'date_format:"Y-m-d"',
             'avatar' => 'image|max:3000'
         ]);
 
         $user = Auth::user();
-
-        if ($request->has('name')) {
-            if ($user->name !== $request->name){
-                $user->name = $request->name;
-            }
-        }
-
-        if ($request->has('birthday')) {
-            if ($user->birthday !== $request->birthday) {
-                $user->birthday = $request->birthday;
-            }
-        }
-
+        $user->fill($validatedRequestBody);
         $user->save();
-        $this->avatarSaver->save($request->avatar);
+        if ($request->has('avatar')) {
+            $this->avatarSaver->save($request->avatar, $user);
+        }
         return redirect('profile');
     }
 }

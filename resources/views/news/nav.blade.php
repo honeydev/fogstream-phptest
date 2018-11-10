@@ -6,6 +6,9 @@
             </li>
             @auth
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('news.add') }}">Add news</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('profile') }}">Profile</a>
                 </li>
                 <li class="nav-item">

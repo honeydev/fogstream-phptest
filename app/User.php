@@ -20,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'birthday_date'
+        'name', 'email', 'password', 'birthday'
     ];
 
     /**
@@ -32,18 +32,23 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /**
+     * @return Carbon
+     */
     public function getBirthday(): Carbon
     {
-        return Carbon::parse($this->birthday_date);
+        return Carbon::parse($this->birthday);
     }
 
+    /**
+     * @return Avatar
+     */
     public function avatar(): Avatar
     {
         $avatarRelation = $this->hasOne('News\Avatar', 'user_id');
         if ($avatarRelation->get()->isEmpty()) {
-           return User::where('email', 'default')->first()->avatar();
+            return User::where('email', 'default')->first()->avatar();
         }
         return $avatarRelation->first();
     }
-
 }

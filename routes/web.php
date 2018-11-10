@@ -12,11 +12,17 @@
 */
 
 Auth::routes();
+Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::get('/', 'NewsController@index');
+Route::get('/news/add', 'NewsController@addPage')->name('news.add');
+Route::post('/news/store', 'NewsController@storeNews')->name('news.store');
+Route::get('/news/{id}', 'NewsController@newsPage')->name('news.page');
 
 Route::get('profile', 'ProfileController@index')->name('profile');
 Route::get('profile/update', 'ProfileController@updatePage')->name('profile.update');
 Route::post('profile/store', 'ProfileController@storeProfile')->name('profile.store');
 
-Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
+
+
+

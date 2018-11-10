@@ -45,6 +45,11 @@ $app->bind('News\Savers\AvatarSaver', function ($app) {
     return new News\Savers\AvatarSaver();
 });
 
+$app->bind('News\Savers\PreviewSaver', function ($app) {
+    return new News\Savers\PreviewSaver();
+});
+
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application
