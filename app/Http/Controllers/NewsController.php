@@ -10,6 +10,7 @@ use \News\Savers\PreviewSaver;
 use \News\Transformers\NewsTransformer;
 use \News\{News, Preview};
 use League\Fractal\Manager;
+use \News\Helpers\MergePaginationHelper;
 
 class NewsController extends Controller
 {
@@ -22,11 +23,13 @@ class NewsController extends Controller
      * @var \News\Transformers\NewsTransformer
      */
     private $newsTransformer;
-
+    /**
+     * @var Manager
+     */
     private $fractalManager;
 
     public function __construct(
-        PreviewSaver $previewSaver, 
+        PreviewSaver $previewSaver,
         NewsTransformer $newsTransformer,
         Manager $fractalManager
     )
@@ -86,8 +89,16 @@ class NewsController extends Controller
     {
         $allNewsResource = $this->newsTransformer->transform(News::all());
         $allNews = $this->fractalManager->createData($allNewsResource);
-        dd($allNews->toArray());
-        $allNewsCollection = $allNewsResource->getData();
-        return response()->json($allNewsCollection);
+        $allNews = $allNews->toArray()['data'];
+        return response()->json($allNews);
+    }
+
+    public function getByCursor()
+    {
+        $news = News::paginate(10);
+        $newsResource =  $this->newsTransformer->transform($news);
+        $newsCollection = $this->fractalManager->createData($newsResource);
+        $mergedNews = MergePaginationHelper::merge($news, $newsCollection->toArray());
+        return response()->json($mergedNews);
     }
 }

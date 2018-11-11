@@ -1,61 +1,97 @@
+'use strict';
+
 import Vue from 'vue';
 import Axios from 'axios';
+import NewsFormater from './NewsFormater';
+import eventBus from '../eventBus';
+import loadMoreButton from './loadMoreButton';
 
+const newsFormater = new NewsFormater();
 
-Vue.component('news', {
-
+Vue.component('newslist', {
     template: `
         <div class="container">
-            <div class="row">
-                <row v-for="row in news"></row>
+            <div class="row" v-for="row in news" >
+                <news 
+                v-for="(concretNews, index) in row"
+                    v-bind:title="concretNews.title"
+                    v-bind:body="concretNews.body"
+                    v-bind:url="concretNews.url"
+                    v-bind:created="concretNews.created"
+                    v-bind:author="concretNews.author"
+                    v-bind:preview="concretNews.preview"
+                ></news>
             </div>
         </div>
     `,
     data() {
-        let news = {};
-
-        for (let i = 0; i < 12; i = i + 3) {
-            let row = {};
-
-            for (let y = 0; y < 3; y++) {
-                row[y] = {
-                    header: 'header',
-                    date: 'date',
-                    id: 0
-                }
-            }
-            news[i] = row;
+        return {
+            pagination: [],
+            news: []
         }
-        console.log(news)
-        return {news: news};
+    },
+    created() {
+        console.log('event bus', eventBus)
+        Axios.get('/api/news/get?page=1').then((response) => {
+            this.pagination = response.data;
+            this.setNews(this.pagination.data.data);
+        });
+        this.setEventsListerning();
+    },
+    methods: {
+        setNews(news) {
+            this.news = this.formatNews(news);
+        },
+        addNews(news) {
+            const formated = this.formatNews(news);
+            for (let index in formated) {
+                this.news.push(formated[index]);
+            }
+        },
+        nextPage() {
+            Axios.get(this.pagination.next_page_url).then((response) => {
+                this.pagination = response.data;
+                setNews();
+            });
+        },
+        formatNews(news) {
+            return newsFormater.format(news);
+        },
+        isEvenNews(index) {
+            return index % 2 === 0;
+        },
+        setEventsListerning() {
+            eventBus.eventBus.$on('click-load-more-button', () => {
+                Axios.get(this.pagination.next_page_url).then((response) => {
+                    this.pagination = response.data;
+                    this.addNews(this.pagination.data.data);
+                });
+            });
+        }
     }
 });
 
-Vue.component('row', {
+Vue.component('news', {
     template: `
-        <div class="row">
-            <news v-for="news in row"></news>
+        <div class="d-flex flex-column border rounded col-6 newsPreview">
+            <h5>{{ title }}</h5>
+            <img v-if="preview !== undefined" v-bind:src="preview.url" class="frontpagePreview">
+            <p>{{ body }}</p>
+            <div class="mt-auto">
+                <ul class="list-unstyled list-inline ">
+                    <li>Author: {{ author.name }}</li>
+                    <li>Created: {{ created.formated }}</li>
+                </ul>
+                <a v-bind:href="url" class="btn btn-primary">Read More</a>
+             </div>
         </div>
-    `
+    `,
+    props: ['title', 'body', 'created', 'author', 'preview', 'url'],
 });
 
-Vue.component('newsArticle', {
-    template: `
-        <div class="col-3 offset-1">
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src=".../100px180/" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-        </div>
-    `
-})
-
 const news = new Vue({
-    el: "#news"
+    el: "#news",
+    components: {loadMoreButton: loadMoreButton},
 });
 
 export default news;

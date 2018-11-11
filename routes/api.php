@@ -18,3 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/news/get/all', 'NewsController@getAll');
+Route::get('/news/get', 'NewsController@getByCursor');

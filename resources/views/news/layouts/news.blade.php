@@ -6,7 +6,7 @@
     <title>{{ config('app.name') }} | {{ $page }}</title>
     {!! NoCaptcha::renderJs() !!}
 </head>
-<body>
+<body id="body">
 @include('news.nav')
 @yield('content')
 <script src="{{ url('/') }}/frontend/js/dist/bundle.js"></script>

@@ -36,4 +36,9 @@ class News extends Model
         $carbon = Carbon::parse($this->created_at);
         return "{$carbon->day}.{$carbon->month}.{$carbon->year} in {$carbon->hour}:{$carbon->minute}:{$carbon->second}";
     }
+
+    public function getUrl(): string
+    {
+        return url('/news') . "/{$this->id}";
+    }
 }
