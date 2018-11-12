@@ -2,7 +2,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <form id="addNewsForm" class="mx-auto addNewsForm" method="POST" action="{{ route('news.store') }}" enctype="multipart/form-data">
+        <form id="addNewsForm" class="mx-auto addNewsForm" method="POST" action="{{ route('news.create') }}" enctype="multipart/form-data">
             @csrf
             @if ($errors->has('title'))
                 <div class="alert alert-danger" role="alert">

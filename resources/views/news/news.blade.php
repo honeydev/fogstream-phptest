@@ -4,11 +4,11 @@
         <div class="row ">
             <div class="col-8 offset-3">
                 <h2>{{ $news->title }}</h2>
-                <div class="row">
-                    @isset($preview)
-                        <img src="{{ $preview->getUrl() }}" class="rounded img-fluid preview" alt="Avatar">
-                    @endisset
+                @isset($preview)
+                <div class="row mx-auto">
+                    <img src="{{ $preview->getUrl() }}" class="rounded img-fluid preview" alt="Preview">
                 </div>
+                @endisset
                 <p>{{ $news->body }}</p>
                 <ul class="list-unstyled list-inline">
                     <li class="list-inline-item">Author: {{ $author->name }}</li>

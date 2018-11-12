@@ -11,6 +11,7 @@ const newsFormater = new NewsFormater();
 Vue.component('newslist', {
     template: `
         <div class="container">
+            <div class="col-10 offset-1">
             <div class="row" v-for="row in news" >
                 <news 
                 v-for="(concretNews, index) in row"
@@ -20,7 +21,9 @@ Vue.component('newslist', {
                     v-bind:created="concretNews.created"
                     v-bind:author="concretNews.author"
                     v-bind:preview="concretNews.preview"
+                    v-bind:even="isEvenNews(index)"
                 ></news>
+            </div>
             </div>
         </div>
     `,
@@ -80,7 +83,7 @@ Vue.component('newslist', {
 
 Vue.component('news', {
     template: `
-        <div class="d-flex flex-column border rounded col-6 newsPreview">
+        <div class=" d-flex flex-column border rounded  newsPreview col-5"  v-bind:class="{'ml-auto mr-4': even, 'mr-auto mr-4': !even }">
             <h5>{{ title }}</h5>
             <img v-if="preview !== undefined" v-bind:src="preview.url" class="frontpagePreview">
             <p>{{ body }}</p>
@@ -92,8 +95,9 @@ Vue.component('news', {
                 <a v-bind:href="url" class="btn btn-primary">Read More</a>
              </div>
         </div>
+        </div>
     `,
-    props: ['title', 'body', 'created', 'author', 'preview', 'url'],
+    props: ['title', 'body', 'created', 'author', 'preview', 'url', 'even'],
 });
 
 const news = new Vue({

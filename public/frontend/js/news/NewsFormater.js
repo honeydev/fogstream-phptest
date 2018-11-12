@@ -9,7 +9,7 @@ class NewsFormater {
      */
     format(news) {
         let formatedNews = this.formatTime(news);
-        console.log(formatedNews)
+        formatedNews = this.sliceBody(news);
         formatedNews = this.zipInRows(formatedNews);
         return formatedNews;
     }
@@ -27,11 +27,11 @@ class NewsFormater {
     /**
      *
      * @param news
-     * @returns {*}
+     * @returns {array}
      */
     sliceBody(news) {
         return news.map((news) => {
-            news.body = news.body.slice(30);
+            news.body = news.body.slice(0, 300);
             return news;
         });
     }

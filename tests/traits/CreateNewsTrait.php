@@ -8,7 +8,12 @@ use News\News;
 
 trait CreateNewsTrait
 {
-    public function createNews(int $count, $attributes = [])
+    /**
+     * @param int $count
+     * @param array $attributes
+     * @return array
+     */
+    public function createNews(int $count, array $attributes = []): array
     {
         $news = [];
         for ($i = 0; $i < $count; $i++) {

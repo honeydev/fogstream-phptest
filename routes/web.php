@@ -16,7 +16,7 @@ Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::get('/', 'NewsController@index');
 Route::get('/news/add', 'NewsController@addPage')->name('news.add');
-Route::post('/news/store', 'NewsController@storeNews')->name('news.store');
+Route::post('/news/create', 'NewsController@createNews')->name('news.create');
 Route::get('/news/{id}', 'NewsController@newsPage')->name('news.page');
 
 Route::get('profile', 'ProfileController@index')->name('profile');

@@ -1,8 +1,6 @@
 @extends('news.layouts.news')
 @section('content')
     {!! NoCaptcha::renderJs() !!}
-
-    {{ var_dump($errors) }}
     <div class="container">
         <div class="row">
             <form class="mx-auto registerForm" method="POST" action="{{ route('register') }}">
@@ -18,6 +16,11 @@
                         {{ $errors->first('password') }}
                     </div>
                 @endif
+                @if ($errors->has('password_confirmation'))
+                    <div class="alert alert-danger" role="alert">
+                        {{ $errors->first('password_confirmation') }}
+                    </div>
+                @endif
 
                 @if ($errors->has('g-recaptcha-response'))
                     <div class="alert alert-danger" role="alert">
@@ -30,11 +33,11 @@
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" name="password" class="{{ $errors->has('password') ? 'is-invalid' : '' }} form-control" id="password" placeholder="Password" required>
+                    <input type="password" name="password" class="{{ $errors->has('password') || $errors->has('password_confirmation') ? 'is-invalid' : '' }} form-control" id="password" placeholder="Password" required>
                 </div>
                 <div class="form-group">
                     <label for="passwordConfirm">Password repeat</label>
-                    <input type="password" name="password_confirmation" class="{{ $errors->has('password') ? 'is-invalid' : '' }} form-control" id="password_confirm" placeholder="Password repeat" required>
+                    <input type="password" name="password_confirmation" class="{{ $errors->has('password') || $errors->has('password_confirmation') ? 'is-invalid' : '' }} form-control" id="password_confirm" placeholder="Password repeat" required>
                 </div>
                 {!! NoCaptcha::display() !!}
                 <button type="submit" class="btn btn-primary">Submit</button>

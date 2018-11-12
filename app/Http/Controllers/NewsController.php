@@ -49,7 +49,7 @@ class NewsController extends Controller
         return view('news.addnews', ['page' => 'Add news']);
     }
 
-    public function storeNews(Request $request)
+    public function createNews(Request $request)
     {
         $validatedRequestBody = $request->validate([
             'title' => 'required|between:1,30',
@@ -85,20 +85,4 @@ class NewsController extends Controller
         ]);
     }
 
-    public function getAll()
-    {
-        $allNewsResource = $this->newsTransformer->transform(News::all());
-        $allNews = $this->fractalManager->createData($allNewsResource);
-        $allNews = $allNews->toArray()['data'];
-        return response()->json($allNews);
-    }
-
-    public function getByCursor()
-    {
-        $news = News::paginate(10);
-        $newsResource =  $this->newsTransformer->transform($news);
-        $newsCollection = $this->fractalManager->createData($newsResource);
-        $mergedNews = MergePaginationHelper::merge($news, $newsCollection->toArray());
-        return response()->json($mergedNews);
-    }
 }

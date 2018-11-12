@@ -28,7 +28,6 @@ class NewsTest extends TestCase
 
     public function testGetSecondTenNews()
     {
-        parent::setUp();
         $news = $this->createNews(20);
         $cursor = 2;
         $response = $this->get("/api/news/get?page={$cursor}");
@@ -44,8 +43,8 @@ class NewsTest extends TestCase
         $news = $this->createNews(5);
         $response = $this->get('/api/news/get/all');
         $response->assertStatus(200);
-        $response->assertSee($news[0]->title);
         $transformedNews = $this->transformNews($news);
+        $transformedNews = array_reverse($transformedNews);
         foreach ($transformedNews as $singleNews) {
             $response->assertSee(json_encode($singleNews));
         }
@@ -72,6 +71,7 @@ class NewsTest extends TestCase
                 'id' => $news[$i]->id,
                 'title' => $news[$i]->title,
                 'body' => $news[$i]->body,
+                'url' => $news[$i]->getUrl(),
                 'created' => $news[$i]->created_at,
                 'author' => [
                     'email' => $author->email,
