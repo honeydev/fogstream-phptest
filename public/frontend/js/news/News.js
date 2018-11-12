@@ -31,12 +31,12 @@ Vue.component('newslist', {
         }
     },
     created() {
-        console.log('event bus', eventBus)
         Axios.get('/api/news/get?page=1').then((response) => {
             this.pagination = response.data;
             this.setNews(this.pagination.data.data);
+            this.checkNextPage();
         });
-        this.setEventsListerning();
+        this.setEventsListerners();
     },
     methods: {
         setNews(news) {
@@ -44,6 +44,7 @@ Vue.component('newslist', {
         },
         addNews(news) {
             const formated = this.formatNews(news);
+
             for (let index in formated) {
                 this.news.push(formated[index]);
             }
@@ -60,11 +61,17 @@ Vue.component('newslist', {
         isEvenNews(index) {
             return index % 2 === 0;
         },
-        setEventsListerning() {
+        checkNextPage() {
+          if (this.pagination.next_page_url === null) {
+              eventBus.eventBus.$emit('next-page-is-empty');
+          }
+        },
+        setEventsListerners() {
             eventBus.eventBus.$on('click-load-more-button', () => {
                 Axios.get(this.pagination.next_page_url).then((response) => {
                     this.pagination = response.data;
                     this.addNews(this.pagination.data.data);
+                    this.checkNextPage();
                 });
             });
         }
