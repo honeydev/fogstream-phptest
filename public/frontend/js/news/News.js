@@ -11,7 +11,7 @@ const newsFormater = new NewsFormater();
 Vue.component('newslist', {
     template: `
         <div class="container">
-            <div class="col-10 offset-1">
+            <div class="col-12">
             <div class="row" v-for="row in news" >
                 <news 
                 v-for="(concretNews, index) in row"
