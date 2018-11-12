@@ -24,6 +24,11 @@ class ProfileController extends Controller
         $this->avatarSaver = $avatarSaver;
     }
 
+    /**
+     * @param Request $request
+     * @param string $userId
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getProfile(Request $request, string $userId)
     {
         $user = User::find($userId);
@@ -34,6 +39,10 @@ class ProfileController extends Controller
         return response()->json(['success' => ["user" => $user->toArray(), "avatar" => $avatar->toArray()]], 200);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function storeProfile(Request $request)
     {
         $user = $request->user();

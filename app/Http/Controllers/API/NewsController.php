@@ -68,7 +68,10 @@ class NewsController extends Controller
         return response()->json($mergedNews);
     }
 
-
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function createNews(Request $request)
     {
         $rules = [

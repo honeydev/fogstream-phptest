@@ -28,6 +28,12 @@ class NewsController extends Controller
      */
     private $fractalManager;
 
+    /**
+     * NewsController constructor.
+     * @param PreviewSaver $previewSaver
+     * @param NewsTransformer $newsTransformer
+     * @param Manager $fractalManager
+     */
     public function __construct(
         PreviewSaver $previewSaver,
         NewsTransformer $newsTransformer,
@@ -39,16 +45,26 @@ class NewsController extends Controller
         $this->fractalManager = $fractalManager;
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         return view('news.frontpage', ['page' => 'Main page']);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function addPage()
     {
         return view('news.addnews', ['page' => 'Add news']);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function createNews(Request $request)
     {
         $validatedRequestBody = $request->validate([
@@ -69,6 +85,11 @@ class NewsController extends Controller
         return redirect("/news/{$news->id}");
     }
 
+    /**
+     * @param Request $request
+     * @param string $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     */
     public function newsPage(Request $request, string $id)
     {
         $targetNews = News::find(($id));

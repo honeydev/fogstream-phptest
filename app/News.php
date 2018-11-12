@@ -23,9 +23,6 @@ class News extends Model
         return $this->hasOne('\News\User', 'id', 'user_id')->first();
     }
 
-    /**
-     * @return Model|\Illuminate\Database\Eloquent\Relations\HasOne|null|object
-     */
     public function preview()
     {
         return $this->hasOne('\News\Preview', 'news_id', 'id')->first();

@@ -38,6 +38,10 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    /**
+     * @param Request $request
+     * @throws \Illuminate\Validation\ValidationException
+     */
     protected function validateLogin(Request $request)
     {
         $this->validate($request, [
