@@ -47,7 +47,7 @@
     ```bash
        php artisan storage:link
     ```
-7 Собираем фронтенд
+7. Собираем фронтенд
     ```bash
         cd ./public/frontend && npm i && npm run build
     ```
