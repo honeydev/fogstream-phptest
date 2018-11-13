@@ -41,7 +41,7 @@
          php artisan tinker
      ```
     ```php
-        create(\News\News::class, 39)->create();
+        create(\News\News::class, 30)->create();
     ```
 6. Симлинки хранилища
     ```bash
