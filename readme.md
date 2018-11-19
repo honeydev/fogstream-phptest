@@ -41,13 +41,13 @@
          php artisan tinker
      ```
     ```php
-        create(\News\News::class, 39)->create();
+        create(\News\News::class, 30)->create();
     ```
 6. Симлинки хранилища
     ```bash
        php artisan storage:link
     ```
-7 Собираем фронтенд
+7. Собираем фронтенд
     ```bash
         cd ./public/frontend && npm i && npm run build
     ```
