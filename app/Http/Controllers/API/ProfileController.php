@@ -14,10 +14,10 @@ class ProfileController extends Controller
      * @var \News\Savers\AvatarSaver
      */
     private $avatarSaver;
+
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * ProfileController constructor.
+     * @param AvatarSaver $avatarSaver
      */
     public function __construct(AvatarSaver $avatarSaver)
     {
@@ -56,6 +56,10 @@ class ProfileController extends Controller
         if ($request->has('avatar')) {
             $this->avatarSaver->save($request->avatar, $user);
         }
-        return response()->json(["success" => "Profile successful update"], 200);
+        return response()->json(["success" => [
+            "user" => $user->toArray(),
+            "avatar" => $user->avatar()->toArray()
+            ]
+        ]);
     }
 }

@@ -25,4 +25,4 @@ Route::get('/news/get/all', 'API\NewsController@getAll');
 Route::get('/news/get', 'API\NewsController@getByCursor');
 
 Route::get('/profile/get/{id}', 'API\ProfileController@getProfile');
-Route::post('profile/store', 'API\ProfileController@storeProfile')->middleware('auth:api');
+Route::put('profile/store', 'API\ProfileController@storeProfile')->middleware('auth:api');

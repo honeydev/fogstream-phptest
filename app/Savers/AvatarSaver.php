@@ -5,13 +5,17 @@ declare(strict_types=1);
 namespace News\Savers;
 
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
-use News\{User, Avatar};
+use News\Avatar;
 
 class AvatarSaver 
 {
+    /**
+     * @param UploadedFile $avatar
+     * @param Model $owner
+     * @return Model
+     */
     public function save(UploadedFile $avatar, Model $owner): Model
     {
         $currentAvatar = $owner->avatar();

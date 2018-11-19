@@ -2,7 +2,6 @@
 
 namespace News\Http\Controllers\API;
 
-use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use News\Http\Controllers\Controller;

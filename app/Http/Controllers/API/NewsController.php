@@ -93,6 +93,12 @@ class NewsController extends Controller
         if ($request->has('preview')) {
             $this->previewSaver->save($request->preview, $news);
         }
-        return response()->json(["success" => "News successful created"], 201);
+
+        $newsResource = $this->newsTransformer->transform([$news]);
+        $newsCollection  = $this->fractalManager->createData($newsResource);
+        $newsAsArray = $newsCollection->toArray()['data'][0];
+        return response()->json(["success" => [
+            "news" => $newsAsArray
+        ]], 201);
     }
 }

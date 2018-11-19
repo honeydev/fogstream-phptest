@@ -5,13 +5,17 @@ declare(strict_types=1);
 namespace News\Savers;
 
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
-use News\{User, Preview};
+use News\Preview;
 
 class PreviewSaver
 {
+    /**
+     * @param UploadedFile $preview
+     * @param Model $news
+     * @return Model
+     */
     public function save(UploadedFile $preview, Model $news): Model
     {
         $author = $news->author();

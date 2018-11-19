@@ -7,7 +7,6 @@ namespace News\Http\Controllers\API;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use News\Http\Controllers\Controller;
-use News\User;
 use Validator;
 
 class LoginController extends Controller

@@ -6,7 +6,6 @@ namespace News\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -15,9 +14,8 @@ class ProfileController extends Controller
      */
     private $avatarSaver;
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * ProfileController constructor.
+     * @param \News\Savers\AvatarSaver $avatarSaver
      */
     public function __construct(\News\Savers\AvatarSaver $avatarSaver)
     {

@@ -8,9 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use \News\Savers\PreviewSaver;
 use \News\Transformers\NewsTransformer;
-use \News\{News, Preview};
+use \News\News, Preview;
 use League\Fractal\Manager;
-use \News\Helpers\MergePaginationHelper;
 
 class NewsController extends Controller
 {
